@@ -89,7 +89,7 @@ class _ConvertLatLangToAddressState extends State<ConvertLatLangToAddress> {
                   if (locations.isNotEmpty) {
                     setState(() {
                       coordinates =
-                          "Latitude: ${locations.first.latitude}, Longitude: ${locations.first.longitude}";
+                          "Latitude: ${locations.last.latitude}, Longitude: ${locations.last.longitude} , Date&time : ${locations.last.timestamp} ";
                     });
                   }
                 } catch (e) {

@@ -60,7 +60,6 @@ class _ConvertLatLangToAddressState extends State<ConvertLatLangToAddress> {
                 ),
               ),
             ),
-
             SizedBox(height: 20),
             Text(
               address,
@@ -68,7 +67,6 @@ class _ConvertLatLangToAddressState extends State<ConvertLatLangToAddress> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 40),
-
             TextField(
               controller: addressController,
               decoration: InputDecoration(

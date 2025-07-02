@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
@@ -51,6 +52,16 @@ Completer<GoogleMapController> _controller = Completer();
     super.initState();
     marker.addAll(list);
   }
+
+ Future<Position>   getUserCurrentLocation()async{
+  await  Geolocator .requestPermission().then((value){
+
+  }).onError((error,stackTrace){
+    print('Error : ${error.toString()}');
+  });
+  return await Geolocator.getCurrentPosition();
+ }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,16 +79,20 @@ Completer<GoogleMapController> _controller = Completer();
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: ()async{
-           GoogleMapController controller = await _controller.future;
-           controller.animateCamera(CameraUpdate.newCameraPosition(
-               CameraPosition(
-                   target: LatLng(20.5937, 21.6001),
-                 zoom: 14,
-               ),
-           ));
-           setState(() {
-
-           });
+           // GoogleMapController controller = await _controller.future;
+           // controller.animateCamera(CameraUpdate.newCameraPosition(
+           //     CameraPosition(
+           //         target: LatLng(20.5937, 21.6001),
+           //       zoom: 14,
+           //     ),
+           // ));
+           // setState(() {
+           //
+           // });
+            getUserCurrentLocation().then((value){
+              print('My current location');
+              print(value.latitude.toString() +""+ value.longitude.toString());
+            });
           },
         child: Icon(Icons.location_disabled_outlined),
       ),

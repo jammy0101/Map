@@ -54,7 +54,7 @@ Completer<GoogleMapController> _controller = Completer();
   }
 
  Future<Position>   getUserCurrentLocation()async{
-  await  Geolocator .requestPermission().then((value){
+  await  Geolocator.requestPermission().then((value){
 
   }).onError((error,stackTrace){
     print('Error : ${error.toString()}');

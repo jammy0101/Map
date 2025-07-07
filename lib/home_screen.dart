@@ -31,26 +31,55 @@ Completer<GoogleMapController> _controller = Completer();
         title: 'My current Location',
       ),
     ),
-    Marker(
-      markerId: MarkerId('2'),
-      position: LatLng(1.9979, 21.6001),
-      infoWindow: InfoWindow(
-        title: 'Another Location',
-      ),
-    ),
-    Marker(
-      markerId: MarkerId('3'),
-      position: LatLng(20.5937, 21.6001),
-      infoWindow: InfoWindow(
-        title: 'india Location',
-      ),
-    ),
+    // Marker(
+    //   markerId: MarkerId('2'),
+    //   position: LatLng(1.9979, 21.6001),
+    //   infoWindow: InfoWindow(
+    //     title: 'Another Location',
+    //   ),
+    // ),
+    // Marker(
+    //   markerId: MarkerId('3'),
+    //   position: LatLng(20.5937, 21.6001),
+    //   infoWindow: InfoWindow(
+    //     title: 'india Location',
+    //   ),
+    // ),
   ];
+
+  loadData(){
+    getUserCurrentLocation().then((value) async {
+      print('My current location');
+      print(value.latitude.toString() +""+ value.longitude.toString());
+
+      marker.add(
+        Marker(
+          markerId: MarkerId('2'),
+          position: LatLng(value.latitude, value.longitude),
+          infoWindow: InfoWindow(
+            title: 'My current location',
+          ),
+        ),
+      );
+      CameraPosition cameraPosition = CameraPosition(
+        target: LatLng(value.latitude, value.longitude),
+        zoom: 14,
+      );
+
+      final GoogleMapController controller = await  _controller.future;
+
+      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+      setState(() {
+
+      });
+    });
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     marker.addAll(list);
+    loadData();
   }
 
  Future<Position>   getUserCurrentLocation()async{
@@ -89,10 +118,7 @@ Completer<GoogleMapController> _controller = Completer();
            // setState(() {
            //
            // });
-            getUserCurrentLocation().then((value){
-              print('My current location');
-              print(value.latitude.toString() +""+ value.longitude.toString());
-            });
+
           },
         child: Icon(Icons.location_disabled_outlined),
       ),
